@@ -1,50 +1,37 @@
 <html>
 <head>
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <script src="/js/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Deep Learning</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $('#upload').on('click', function () {
+                var file_data = $('#file').prop('files')[0];
+                var form_data = new FormData();
+                form_data.append('file', file_data);
+                $.ajax({
+                    url: 'http://localhost:8080/upload', // point to server-side controller method
+                    dataType: 'text', // what to expect back from the server
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,
+                    type: 'post',
+                    success: function (response) {
+                        $('#msg').html(response); // display success response from the server
+                    },
+                    error: function (response) {
+                        $('#msg').html(response); // display error response from the server
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
-<main>
-    <div class="container p-5">
-        <div class="row my-5">
-            <h1 class="mx-auto">Covid-19 X-ray Diagnose</h1>
-        </div>
-        <form id="diagnoseForm" class="mb-4">
-            <div class="input-group">
-                <input type="url" id="imageUrl" class="form-control" required
-                       placeholder="Enter a image url"
-                       aria-label="Image URL">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-primary">Submit</button>
-                </div>
-            </div>
-        </form>
-        <div class="row ml-1">
-            <div id="spinnerDiagnose" class="text-primary" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-            <div id="diagnose"></div>
-        </div>
+<p id="msg"></p>
 
-    </div>
-</main>
-<script>
-$( "#diagnoseForm" ).submit(function( event ) {
-  const imageUrl = $('#imageUrl').val();
-  $('#spinnerDiagnose').addClass('spinner-border');
-  $('#diagnose').html('');
-
-  $.ajax('/api/v1/covid19/diagnose?imageUrl='+imageUrl)
-  .done(data => {
-    $('#spinnerDiagnose').removeClass('spinner-border');
-    $('#diagnose').html(data.result);
-  })
-  .fail(err => {
-    $('#spinnerDiagnose').removeClass('spinner-border');
-    $('#diagnose').html('Failed to get answer');
-  });
-  event.preventDefault();
-});
-</script>
+<input type="file" id="file" name="file" multiple />
+<button id="upload">Upload</button>
 </body>
 </html>
