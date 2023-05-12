@@ -1,4 +1,4 @@
-package com.jcg.djl;
+package com.husercar.djl;
 
 import ai.djl.Application;
 import ai.djl.ModelException;
