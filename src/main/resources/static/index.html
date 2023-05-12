@@ -1,8 +1,10 @@
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Deep Learning</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function (e) {
             $('#upload').on('click', function () {
@@ -18,7 +20,7 @@
                     data: form_data,
                     type: 'post',
                     success: function (response) {
-                        $('#msg').html(response); // display success response from the server
+                        displayImage()
                     },
                     error: function (response) {
                         $('#msg').html(response); // display error response from the server
@@ -28,10 +30,30 @@
         });
     </script>
 </head>
-<body>
-<p id="msg"></p>
 
-<input type="file" id="file" name="file" multiple />
-<button id="upload">Upload</button>
+<body>
+
+
+
+    <h1>Image Classification Application using "RESNET50"</h1>
+    <h2>Project by Carlo Huser (husercar@students.zhaw.ch)</h2>
+<div>   </div>
+    <p>How to use:</p>
+    <ul><li>Select an image using the "Browse Files"-button</li>
+    <li>Click "Upload"</li>
+<li>Wait a few seconds for the application to process your image</li>
+<li>Enjoy the result!</li></ul>
+    <input type="file" id="file" name="file" multiple />
+    <button id="upload">Upload</button>
+    <div id="answerPart" style="visibility: hidden;">
+        <p>
+            <h2>Your Image:</h2>
+            <div><img id="imageElement" src="" alt="Detected Image"></div>
+        </p>
+    </div>
+    <div>
+        <p id="msg"></p>
+    </div>
 </body>
+
 </html>
