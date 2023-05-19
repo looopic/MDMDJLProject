@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Deep Learning</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/jquery.min.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script><script type="text/javascript">
         $(document).ready(function (e) {
             $('#upload').on('click', function () {
                 var file_data = $('#file').prop('files')[0];
                 var form_data = new FormData();
                 form_data.append('file', file_data);
                 $.ajax({
-                    url: 'http://localhost:8080/upload', // point to server-side controller method
+                    url: '/upload', // point to server-side controller method
                     dataType: 'text', // what to expect back from the server
                     cache: false,
                     contentType: false,
@@ -29,6 +28,7 @@
             });
         });
     </script>
+    
 </head>
 
 <body>

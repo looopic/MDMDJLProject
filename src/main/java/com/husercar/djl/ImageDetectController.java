@@ -11,8 +11,6 @@ import ai.djl.repository.zoo.ModelZoo;
 import ai.djl.repository.zoo.ZooModel;
 import ai.djl.training.util.ProgressBar;
 import ai.djl.translate.TranslateException;
-import org.apache.commons.compress.utils.IOUtils;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,6 +27,7 @@ import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 
 @RestController
+@CrossOrigin(origins = "https://husercar.azurewebsites.net")
 public class ImageDetectController {
 
     @PostMapping(value = "/upload", produces = MediaType.IMAGE_PNG_VALUE)
@@ -63,7 +61,7 @@ public class ImageDetectController {
 
     private ResponseEntity<String> saveBoundingBoxImage(Path imagePath, DetectedObjects detection)
             throws IOException {
-        Path outputDir = Paths.get("src/main/resources");
+        Path outputDir = Paths.get("/usr/src/app");
         Files.createDirectories(outputDir);
 
         // Make image copy with alpha channel because original image was jpg
@@ -99,16 +97,12 @@ public class ImageDetectController {
     }
 
 
-    @GetMapping(
-            value = "/get",
-            produces = MediaType.IMAGE_PNG_VALUE
-    )
-    public @ResponseBody
-    byte[] getImageWithMediaType() throws IOException {
-        InputStream in = new ClassPathResource(
-                "detected.png").getInputStream();
-        return IOUtils.toByteArray(in);
+    @GetMapping(value = "/get", produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody byte[] getImageWithMediaType() throws IOException {
+        Path imagePath = Paths.get("/usr/src/app/detected.png");  // Update with the correct path
+        return Files.readAllBytes(imagePath);
     }
+
 
 
 }
