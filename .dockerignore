@@ -1,7 +1,4 @@
-.idea
-.mvn
-.vscode
+README.md
 .gitignore
-target
-.git
-.DS_Store
+.vscode
+.idea
